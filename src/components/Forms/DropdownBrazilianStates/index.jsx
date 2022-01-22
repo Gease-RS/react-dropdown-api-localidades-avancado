@@ -1,28 +1,25 @@
 import { useEffect, useState } from "react";
-import { fetchStates } from "../../../helpers/ibge";
+import { fetchStates, parseStates } from "../../../helpers/ibge";
 
-const DropdownBrazilianStates = ({ onChange = () => {} }) => {
+import Dropdrown from "../Dropdown";
+
+const DropdownBrazilianStates = ({ id, name, onChange = () => {} }) => {
   const [states, setStates] = useState([]);
 
   useEffect(() => {
-    fetchStates().then((states) => {
-      setStates(states);
-    });
+    setStates([{ label: "Carregando...", value: "" }]);
+    fetchStates().then(parseStates).then(setStates);
   }, []);
 
-  return (
-    <select id="state" name="state" onChange={onChange}>
-      <option value="">Selecione um estado</option>
-      {states.map((state) => {
-        const { sigla, nome } = state;
-        return (
-          <option key={sigla} value={sigla}>
-            {nome}
-          </option>
-        );
-      })}
-    </select>
-  );
+  const dropdownOptions = {
+    id,
+    name,
+    data: states,
+    onChange,
+  };
+
+  //<Dropdrown id={id} name={name} data={states} onChange={onChange} />
+  return <Dropdrown {...dropdownOptions} />;
 };
 
 export default DropdownBrazilianStates;

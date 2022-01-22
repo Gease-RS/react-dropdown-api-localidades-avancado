@@ -18,9 +18,15 @@ function App() {
     <div className="container">
       <form>
         <label htmlFor="state">Estado:</label>
-        <DropdownBrazilianStates onChange={handleInputChange} />
+        <DropdownBrazilianStates
+          id="state"
+          name="state"
+          onChange={handleInputChange}
+        />
         <label htmlFor="city">Cidade:</label>
         <DropdownBrazilianCities
+          id="city"
+          name="city"
           state={formValues.state}
           onChange={handleInputChange}
         />
